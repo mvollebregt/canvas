@@ -1,1 +1,7 @@
-<canvas #canvasElement width="400px" height="400px"></canvas>
+<canvas #canvasElement
+        width="400px"
+        height="400px"
+        (mousedown)="onMouseDown($event)"
+        (mousemove)="onMouseMove($event)"
+        (mouseup)="onMouseUp()">
+</canvas>
