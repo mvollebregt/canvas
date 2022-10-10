@@ -13,9 +13,12 @@ export abstract class Shape {
 
   abstract draw(ctx: CanvasRenderingContext2D): void;
 
+  abstract erase(ctx: CanvasRenderingContext2D): void;
+
   abstract contains(scaledX: number, scaledY: number): boolean;
 
   move(ctx: CanvasRenderingContext2D, scaledX: number, scaledY: number): void {
+    this.erase(ctx);
     this._scaledX = scaledX;
     this._scaledY = scaledY;
     this.draw(ctx);
