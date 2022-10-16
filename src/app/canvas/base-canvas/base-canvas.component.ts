@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Shape } from "./shape";
 import { ShapeEvent } from "./shape-event";
+import { TransformationType } from "./transformation-type";
 
 @Component({
   selector: 'app-base-canvas',
@@ -67,6 +68,8 @@ export class BaseCanvasComponent implements AfterViewInit {
   private emitEventIfOnShape(eventEmitter: EventEmitter<ShapeEvent>, evt: MouseEvent) {
     const shape = this.findShapeForEvent(evt);
     if (shape) {
+      const horizontalTransformation = shape.transformationForMouseOnX(evt.offsetX - shape.x);
+      const verticalTransformation = shape.transformationForMouseOnY(evt.offsetY - shape.y);
       eventEmitter.emit({
         shape,
         mouseX: evt.x,
@@ -75,10 +78,14 @@ export class BaseCanvasComponent implements AfterViewInit {
         originalY: shape.y,
         originalWidth: shape.width,
         originalHeight: shape.height,
-        transformX: shape.transformationForMouseOnX(evt.offsetX - shape.x),
-        transformY: shape.transformationForMouseOnY(evt.offsetY - shape.y),
+        horizontalTransformation: this.doNotMoveWhenResize(horizontalTransformation, !!verticalTransformation.adjustSize),
+        verticalTransformation: this.doNotMoveWhenResize(verticalTransformation, !!horizontalTransformation.adjustSize)
       });
     }
+  }
+
+  private doNotMoveWhenResize(transformationType: TransformationType, adjustSize: boolean): TransformationType {
+    return transformationType === TransformationType.move && adjustSize ? TransformationType.none : transformationType;
   }
 
   private findShapeForEvent(evt: MouseEvent): Shape | undefined {

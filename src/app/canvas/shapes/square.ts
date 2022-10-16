@@ -3,7 +3,7 @@ import { TransformationType } from "../base-canvas/transformation-type";
 
 export class Square implements Shape {
 
-  private static readonly resizeAreaSize = 5;
+  private static readonly resizeAreaSize = 10;
 
   constructor(
     public x: number,

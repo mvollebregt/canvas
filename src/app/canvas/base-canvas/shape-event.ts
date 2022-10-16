@@ -9,6 +9,6 @@ export interface ShapeEvent {
   originalY: number;
   originalWidth: number;
   originalHeight: number;
-  transformX: TransformationType;
-  transformY: TransformationType;
+  horizontalTransformation: TransformationType;
+  verticalTransformation: TransformationType;
 }
