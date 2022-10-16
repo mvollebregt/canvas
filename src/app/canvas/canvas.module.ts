@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DrawCanvasComponent } from './draw-canvas/draw-canvas.component';
-import { DragCanvasComponent } from './drag-canvas/drag-canvas.component';
+import { BaseCanvasComponent } from './base-canvas/base-canvas.component';
+import { EditableCanvasComponent } from "./editable-canvas/editable-canvas.component";
 
 
 @NgModule({
   declarations: [
-    DrawCanvasComponent,
-    DragCanvasComponent
+    BaseCanvasComponent,
+    EditableCanvasComponent
   ],
   exports: [
-    DrawCanvasComponent,
-    DragCanvasComponent
+    BaseCanvasComponent,
+    EditableCanvasComponent
   ],
   imports: [
     CommonModule

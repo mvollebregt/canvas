@@ -1,6 +1,8 @@
 <canvas #canvasElement
         width="400px"
         height="400px"
+        (click)="onClick($event)"
+        (dblclick)="onDblClick($event)"
         (mousedown)="onMouseDown($event)"
-        (mousemove)="onMouseMove($event)">
+        (mouseup)="onMouseUp($event)">
 </canvas>

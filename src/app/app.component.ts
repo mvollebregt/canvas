@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-import { Square } from "./model/square";
+import { Square } from "./canvas/shapes/square";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'canvas';
 
   public shapes = [
-    new Square(10, 10, 20, 15),
-    new Square(30, 10, 20, 15)
+    new Square(50, 50, 100, 80),
+    new Square(150, 50, 100, 80)
   ];
 }
