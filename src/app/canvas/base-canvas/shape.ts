@@ -6,6 +6,8 @@ export interface Shape {
   y: number;
   width: number;
   height: number;
+  minWidth: number;
+  minHeight: number;
 
   contains(x: number, y: number): boolean;
 

@@ -27,7 +27,9 @@ export class EditableCanvasComponent {
       const y = this.triggeringShapeEvent.originalY + this.triggeringShapeEvent.verticalTransformation.adjustPosition * diffY;
       const width = this.triggeringShapeEvent.originalWidth + this.triggeringShapeEvent.horizontalTransformation.adjustSize * diffX;
       const height = this.triggeringShapeEvent.originalHeight + this.triggeringShapeEvent.verticalTransformation.adjustSize * diffY;
-      this.baseCanvasComponent.transform(shape, x, y, width, height);
+      if (width > shape.minWidth && height > shape.minHeight) {
+        this.baseCanvasComponent.transform(shape, x, y, width, height);
+      }
     }
   }
 

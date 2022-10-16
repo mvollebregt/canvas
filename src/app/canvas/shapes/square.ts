@@ -5,6 +5,9 @@ export class Square implements Shape {
 
   private static readonly resizeAreaSize = 10;
 
+  minWidth = 30;
+  minHeight = 30;
+
   constructor(
     public x: number,
     public y: number,
