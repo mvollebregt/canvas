@@ -1,12 +1,19 @@
 import { Shape } from "../base-canvas/shape";
+import { TransformationType } from "../base-canvas/transformation-type";
 
 export class Square implements Shape {
+
+  private static readonly resizeAreaSize = 5;
 
   constructor(
     public x: number,
     public y: number,
-    public readonly width: number,
-    public readonly height: number) {
+    public width: number,
+    public height: number) {
+  }
+
+  contains(scaledX: number, scaledY: number): boolean {
+    return this.x < scaledX && scaledX < this.x + this.width && this.y < scaledY && scaledY < this.y + this.height;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -21,13 +28,23 @@ export class Square implements Shape {
     this.drawOrErase(ctx);
   }
 
-  contains(scaledX: number, scaledY: number): boolean {
-    return this.x < scaledX && scaledX < this.x + this.width && this.y < scaledY && scaledY < this.y + this.height;
+  transformationForMouseOnX(x: number): TransformationType {
+    return x < Square.resizeAreaSize ? TransformationType.resizeStart
+      : this.width - x < Square.resizeAreaSize ? TransformationType.resizeEnd
+        : TransformationType.move;
   }
 
-  move(x: number, y: number): void {
+  transformationForMouseOnY(y: number): TransformationType {
+    return y < Square.resizeAreaSize ? TransformationType.resizeStart
+      : this.height - y < Square.resizeAreaSize ? TransformationType.resizeEnd
+        : TransformationType.move;
+  }
+
+  transform(x: number, y: number, width: number, height: number): void {
     this.x = x;
     this.y = y;
+    this.width = width;
+    this.height = height;
   }
 
   private drawOrErase(ctx: CanvasRenderingContext2D): void {

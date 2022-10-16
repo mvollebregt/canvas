@@ -15,8 +15,6 @@ export class BaseCanvasComponent implements AfterViewInit {
   @Output() mouseDownOnShape = new EventEmitter<ShapeEvent>();
   @Output() mouseUpOnShape = new EventEmitter<ShapeEvent>();
 
-  @Input() border: number = 10;
-
   @Input() set shapes(shapes: Shape[]) {
     this._shapes = shapes;
     this.drawShapes();
@@ -50,10 +48,10 @@ export class BaseCanvasComponent implements AfterViewInit {
     this.emitEventIfOnShape(this.mouseUpOnShape, evt);
   }
 
-  transform(shape: Shape, transformation: () => void): void {
+  transform(shape: Shape, x: number, y: number, width: number, height: number): void {
     if (this.ctx) {
       shape.erase(this.ctx);
-      transformation();
+      shape.transform(x, y, width, height);
       this.drawShapes();
     }
   }
@@ -69,7 +67,17 @@ export class BaseCanvasComponent implements AfterViewInit {
   private emitEventIfOnShape(eventEmitter: EventEmitter<ShapeEvent>, evt: MouseEvent) {
     const shape = this.findShapeForEvent(evt);
     if (shape) {
-      eventEmitter.emit({shape, offsetX: evt.offsetX - shape.x, offsetY: evt.offsetY - shape.y});
+      eventEmitter.emit({
+        shape,
+        mouseX: evt.x,
+        mouseY: evt.y,
+        originalX: shape.x,
+        originalY: shape.y,
+        originalWidth: shape.width,
+        originalHeight: shape.height,
+        transformX: shape.transformationForMouseOnX(evt.offsetX - shape.x),
+        transformY: shape.transformationForMouseOnY(evt.offsetY - shape.y),
+      });
     }
   }
 
